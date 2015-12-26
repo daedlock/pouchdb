@@ -1064,6 +1064,22 @@ adapters.forEach(function (adapter) {
       });
     });
 
+     it('[4595] should catch invalid urls in replicate', function (done) {
+       var invalidUrl = 'http:///invalidUrl';
+       var db = new PouchDB(dbs.name);
+       var out;
+       try {
+         db.replicate.to(invalidUrl);
+         out = null;
+       }
+       catch (err){
+         out =  err;
+       }
+       out.should.not.equal(null);
+       done();
+    });
+
+
     if (adapter === 'local') {
       // TODO: this test fails in the http adapter in Chrome
       it('should allow unicode doc ids', function (done) {
@@ -1109,6 +1125,8 @@ adapters.forEach(function (adapter) {
           });
         });
       });
+
+     
     }
   });
 });
